@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.entryForm-overlay {
+    position: fixed;
+    /* Stay in place */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+    display: flex;
+    justify-content: center;
+    /* Center horizontally */
+    align-items: center;
+    /* Center vertically */
+}
+
+.entryForm-content {
+    padding: 20px;
+    /* Adds padding around the entire content */
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    /* Could be more or less, depending on screen size */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    /* Add more styling as needed */
+}
+
+.field-container {
+    margin-bottom: 10px;
+    /* Space between each field container */
+    width: 100%;
+
+}
+
+.input-field {
+    /* ... other styles ... */
+    border: 1px solid black;
+    /* Black border for the input fields */
+    width: 100%;
+    /* Make input take full width of its container */
+    box-sizing: border-box;
+    /* Include padding and border in the width */
+    padding: 8px;
+}
+
+.buttons-field {
+
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 8px;
+}
+
+.buttons-field button {
+    margin: 0 8px; /* Adds margin to the left and right of each button */
+}
