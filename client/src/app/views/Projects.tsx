@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import Table from "../components/Table";
-import EntryForm from '../components/EntryForm'; 
+import EntryForm from '../components/EntryForm';
+import RegTimeForm from '../components/RegTimeForm';
 
 export default function Projects() {
 
     const [showEntryForm, setShowEntryForm] = useState(false);
+    const [showTimeForm, setShowTimeForm] = useState(false);
     const [dataChanged, setDataChanged] = useState(false);
 
     const handleAddEntryClick = () => {
         setShowEntryForm(true);
+    };
+
+    const handleTimeClick = () => {
+        setShowTimeForm(true);
     };
 
     const handleDataChange = () => {
@@ -20,14 +26,14 @@ export default function Projects() {
         <>
             <div className="flex items-center my-6">
                 <div className="w-1/2">
-                    <button 
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-                    onClick={handleAddEntryClick}>
+                    <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+                        onClick={handleAddEntryClick}>
                         Add Project
                     </button>
-                    <button 
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={handleAddEntryClick}>
+                    <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        onClick={handleTimeClick}>
                         Register Time
                     </button>
                 </div>
@@ -51,9 +57,15 @@ export default function Projects() {
             </div>
 
             {showEntryForm && (
-                <EntryForm 
+                <EntryForm
                     onClose={() => setShowEntryForm(false)}
                     onDataChange={handleDataChange} // Pass the callback to EntryForm
+                />
+            )}
+
+            {showTimeForm && (
+                <RegTimeForm
+                    onClose={() => setShowTimeForm(false)}
                 />
             )}
             <Table dataChanged={dataChanged} />  {/* Pass the state to Table */}
