@@ -13,7 +13,7 @@ namespace Timelogger.Api.Controllers
 		{
 			_context = context;
 		}
-//test1
+
 		public class ProjectId
 {
     public int Id { get; set; } // This will auto-increment if using Entity Framework
