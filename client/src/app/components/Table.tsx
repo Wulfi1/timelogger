@@ -6,6 +6,7 @@ interface Project {
     field1: string;
     field2: string;
     field3: string;
+    registeredTime: number;
 }
 
 // If you're passing any props to Table, define them here. 
@@ -24,6 +25,7 @@ const Table: React.FC<TableProps> = ({ dataChanged }) => {
                 const response = await fetch('http://localhost:3001/api/projects');
                 if (response.ok) {
                     const data: Project[] = await response.json();
+                    console.log(data);
                     setProjects(data);
                 } else {
                     console.error('Failed to fetch projects');
@@ -53,7 +55,7 @@ const Table: React.FC<TableProps> = ({ dataChanged }) => {
                         <td className="border px-4 py-2">{index + 1}</td>
                         <td className="border px-4 py-2">{project.field1}</td>
                         <td className="border px-4 py-2">{project.field2}</td>
-                        <td className="border px-4 py-2">{0}</td>
+                        <td className="border px-4 py-2">{project.registeredTime + " Hours"}</td>
                         <td className="border px-4 py-2">{project.field3}</td>
                     </tr>
                 ))}

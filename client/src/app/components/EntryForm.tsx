@@ -13,7 +13,7 @@ export default function EntryForm({ onClose, onDataChange }: EntryFormProps) {
 
     // Function to handle the create action
     const handleCreate = async () => {
-        const projectData = {field1, field2, field3 };
+        const projectData = {field1, field2, field3, registeredTime: 0 };
     
         try {
             const response = await fetch('http://localhost:3001/api/projects', {
@@ -70,8 +70,8 @@ export default function EntryForm({ onClose, onDataChange }: EntryFormProps) {
                 <div className='field-container'>
                     <label htmlFor="field3">Deadline</label>
                     <input
-                        type="text"
-                        placeholder="Field 3"
+                        type="Date"
+                        placeholder="Date"
                         className="input-field"
                         value={field3}
                         onChange={(e) => setField3(e.target.value)}
