@@ -18,6 +18,8 @@ interface TableProps {
 
 const Table: React.FC<TableProps> = ({ dataChanged }) => {
     const [projects, setProjects] = useState<Project[]>([]);
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+    const [headerClicked, setHeaderClicked] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -38,6 +40,31 @@ const Table: React.FC<TableProps> = ({ dataChanged }) => {
         fetchData();
     }, [dataChanged]);  // Depend on dataChanged prop to re-fetch data
 
+
+
+    const sortProjects = (projectsToSort: Project[]): Project[] => {
+        return projectsToSort.sort((a, b) => {
+            const dateA = new Date(a.field3);
+            const dateB = new Date(b.field3);
+            return sortOrder === 'asc' ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
+        });
+    };
+
+    const renderSortArrow = () => {
+        if (!headerClicked) return null;
+        return sortOrder === 'asc' ? '↓' : '↑'; // Using Unicode arrows for simplicity
+      };
+
+    // Toggle sorting order
+    const toggleSortOrder = () => {
+        setSortOrder((prevOrder) => (prevOrder === 'asc' ? 'desc' : 'asc'));
+        setHeaderClicked(true);
+    };
+
+    // Sorted projects for rendering
+    const sortedProjects = sortProjects([...projects]);
+
+
     return (
         <table className="table-fixed w-full">
             <thead className="bg-gray-200">
@@ -46,13 +73,13 @@ const Table: React.FC<TableProps> = ({ dataChanged }) => {
                     <th className="border px-4 py-2">Project Name</th>
                     <th className="border px-4 py-2">Customer Name</th>
                     <th className="border px-4 py-2">Registered Time</th>
-                    <th className="border px-4 py-2">Deadline</th>
+                    <th onClick={toggleSortOrder} style={{cursor: 'pointer'}}> Deadline {renderSortArrow()}</th>
                 </tr>
             </thead>
             <tbody>
-                {projects.map((project, index) => (
+                {sortedProjects.map((project) => (
                     <tr key={project.id}>
-                        <td className="border px-4 py-2">{index + 1}</td>
+                        <td className="border px-4 py-2">{project.id}</td>
                         <td className="border px-4 py-2">{project.field1}</td>
                         <td className="border px-4 py-2">{project.field2}</td>
                         <td className="border px-4 py-2">{project.registeredTime + " Hours"}</td>
