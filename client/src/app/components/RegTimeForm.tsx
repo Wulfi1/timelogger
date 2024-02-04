@@ -1,19 +1,17 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 
 interface RegTimeFormProps {
     onClose: () => void;
-    onDataChange: () => void; // Optional: if you need to refresh data in parent component
+    onDataChange: () => void;
 }
 
 export default function RegTimeForm({ onClose, onDataChange }: RegTimeFormProps) {
     const [Time, setAmountTime] = useState(0);
-    const [ProjectNumber, setProjectNumber] = useState(0); // Initialize with passed projectId
+    const [ProjectNumber, setProjectNumber] = useState(0);
 
     const handleRegisterTime = async () => {
-        
-        // Call the API to update the project's registered time
-        // Replace with your actual API endpoint and request structure
+
         const response = await fetch('http://localhost:3001/api/projects/registerTime', {
             method: 'POST',
             headers: {
@@ -24,12 +22,12 @@ export default function RegTimeForm({ onClose, onDataChange }: RegTimeFormProps)
 
         if (response.ok) {
             console.log('Time registered successfully');
-            onDataChange(); // Refresh data in parent component if needed
+            onDataChange();
         } else {
             console.error('Failed to register time');
         }
 
-        onClose(); // Close the form
+        onClose();
     };
 
 
@@ -69,7 +67,7 @@ export default function RegTimeForm({ onClose, onDataChange }: RegTimeFormProps)
                     <button
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         onClick={handleRegisterTime}
-                        >
+                    >
                         Register
                     </button>
 

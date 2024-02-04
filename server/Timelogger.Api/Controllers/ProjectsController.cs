@@ -17,8 +17,7 @@ namespace Timelogger.Api.Controllers
 
 		public class ProjectId
 		{
-			public int Id { get; set; } // This will auto-increment if using Entity Framework
-										// Other properties
+			public int Id { get; set; } 
 		}
 
 		[HttpGet]
@@ -54,21 +53,16 @@ namespace Timelogger.Api.Controllers
 		[Route("registerTime")]
 		public IActionResult RegisterTime([FromBody] TimeRegistrationRequest request)
 		{
-			// Fetch the existing project by ID
 			var project = _context.Projects.FirstOrDefault(p => p.Id == request.Id);
 			if (project == null)
 			{
-				// If no project found, return an appropriate response
 				return NotFound(new { message = "Project not found." });
 			}
 
-			// Update the registered time
 			project.RegisteredTime += request.Time;
 
-			// Save the changes
 			_context.SaveChanges();
 
-			// Return a success response
 			return Ok(new { message = "Time registered successfully." });
 		}
 

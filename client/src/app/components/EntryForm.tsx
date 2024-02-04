@@ -13,8 +13,8 @@ export default function EntryForm({ onClose, onDataChange }: EntryFormProps) {
 
     // Function to handle the create action
     const handleCreate = async () => {
-        const projectData = {field1, field2, field3, registeredTime: 0};
-    
+        const projectData = { field1, field2, field3, registeredTime: 0 };
+
         try {
             const response = await fetch('http://localhost:3001/api/projects', {
                 method: 'POST',
@@ -23,7 +23,7 @@ export default function EntryForm({ onClose, onDataChange }: EntryFormProps) {
                 },
                 body: JSON.stringify(projectData),
             });
-    
+
             if (response.ok) {
                 console.log('Project created successfully');
                 onDataChange();
@@ -80,12 +80,12 @@ export default function EntryForm({ onClose, onDataChange }: EntryFormProps) {
                 </div>
 
                 <div className='buttons-field'>
-                    <button 
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
-                    onClick={handleCreate}>Create</button>
-                    <button 
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
-                    onClick={onClose}>Close</button>
+                    <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        onClick={handleCreate}>Create</button>
+                    <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        onClick={onClose}>Close</button>
                 </div>
             </div>
         </div>

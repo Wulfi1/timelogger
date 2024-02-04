@@ -26,10 +26,8 @@ namespace Timelogger.Api
 			Configuration = builder.Build();
 		}
 
-		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			// Add framework services.
 			services.AddDbContext<ApiContext>(opt => opt.UseInMemoryDatabase("e-conomic interview"));
 			services.AddLogging(builder =>
 			{

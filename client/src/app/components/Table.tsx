@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import TimeOverview from './TimeOverview';
 
-// Define the structure of a project
 interface Project {
     id: number;
     field1: string;
@@ -9,17 +9,21 @@ interface Project {
     registeredTime: number;
 }
 
-// If you're passing any props to Table, define them here. 
-// For example, if you're passing a 'dataChanged' prop, include it in this interface.
-// If no props are being passed, you can remove this interface.
 interface TableProps {
-    dataChanged?: boolean;  // This prop is optional
+    dataChanged: boolean;
 }
 
 const Table: React.FC<TableProps> = ({ dataChanged }) => {
     const [projects, setProjects] = useState<Project[]>([]);
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
     const [headerClicked, setHeaderClicked] = useState(false);
+    const [timeOverview, setShowHoursView] = useState(false);
+
+
+    const handleTimeOverviewClick = () => {
+        setShowHoursView(true);
+    };
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -38,7 +42,7 @@ const Table: React.FC<TableProps> = ({ dataChanged }) => {
         };
 
         fetchData();
-    }, [dataChanged]);  // Depend on dataChanged prop to re-fetch data
+    }, [dataChanged]);
 
 
 
@@ -52,42 +56,52 @@ const Table: React.FC<TableProps> = ({ dataChanged }) => {
 
     const renderSortArrow = () => {
         if (!headerClicked) return null;
-        return sortOrder === 'asc' ? '↓' : '↑'; // Using Unicode arrows for simplicity
-      };
+        return sortOrder === 'asc' ? '↓' : '↑';
+    };
 
-    // Toggle sorting order
+
     const toggleSortOrder = () => {
         setSortOrder((prevOrder) => (prevOrder === 'asc' ? 'desc' : 'asc'));
         setHeaderClicked(true);
     };
 
-    // Sorted projects for rendering
     const sortedProjects = sortProjects([...projects]);
 
 
     return (
-        <table className="table-fixed w-full">
-            <thead className="bg-gray-200">
-                <tr>
-                    <th className="border px-4 py-2 w-12">#</th>
-                    <th className="border px-4 py-2">Project Name</th>
-                    <th className="border px-4 py-2">Customer Name</th>
-                    <th className="border px-4 py-2">Registered Time</th>
-                    <th onClick={toggleSortOrder} style={{cursor: 'pointer'}}> Deadline {renderSortArrow()}</th>
-                </tr>
-            </thead>
-            <tbody>
-                {sortedProjects.map((project) => (
-                    <tr key={project.id}>
-                        <td className="border px-4 py-2">{project.id}</td>
-                        <td className="border px-4 py-2">{project.field1}</td>
-                        <td className="border px-4 py-2">{project.field2}</td>
-                        <td className="border px-4 py-2">{project.registeredTime + " Hours"}</td>
-                        <td className="border px-4 py-2">{project.field3}</td>
+        <>
+            <table className="table-fixed w-full">
+                <thead className="bg-gray-200">
+                    <tr>
+                        <th className="border px-4 py-2 w-12">#</th>
+                        <th className="border px-4 py-2">Project Name</th>
+                        <th className="border px-4 py-2">Customer Name</th>
+                        <th className="border px-4 py-2">Registered Time</th>
+                        <th onClick={toggleSortOrder} style={{ cursor: 'pointer' }}> Deadline {renderSortArrow()}</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {sortedProjects.map((project) => (
+                        <tr key={project.id}>
+                            <td className="border px-4 py-2">{project.id}</td>
+                            <td className="border px-4 py-2">{project.field1}</td>
+                            <td className="border px-4 py-2">{project.field2}</td>
+                            <td style= {{textDecoration: 'underline', cursor: 'pointer'}} onClick={handleTimeOverviewClick} className="border px-4 py-2">{project.registeredTime + " Hours"}</td>
+                            <td className="border px-4 py-2">{project.field3}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+
+
+            {timeOverview && (
+                <TimeOverview
+                    onClose={() => setShowHoursView(false)}
+
+
+                />
+            )}
+        </>
     );
 }
 

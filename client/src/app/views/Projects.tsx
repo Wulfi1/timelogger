@@ -18,7 +18,7 @@ export default function Projects() {
     };
 
     const handleDataChange = () => {
-        setDataChanged(prev => !prev); // Toggle this state to trigger data refresh in Table
+        setDataChanged(prev => !prev);
     };
 
 
@@ -59,7 +59,7 @@ export default function Projects() {
             {showEntryForm && (
                 <EntryForm
                     onClose={() => setShowEntryForm(false)}
-                    onDataChange={handleDataChange} // Pass the callback to EntryForm
+                    onDataChange={handleDataChange}
                 />
             )}
 
@@ -67,10 +67,10 @@ export default function Projects() {
                 <RegTimeForm
                     onClose={() => setShowTimeForm(false)}
                     onDataChange={handleDataChange}
-                    
+
                 />
             )}
-            <Table dataChanged={dataChanged} />  {/* Pass the state to Table */}
+            <Table dataChanged={dataChanged} />
         </>
     );
 }
