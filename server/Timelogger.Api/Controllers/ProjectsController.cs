@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Timelogger.Entities;
+using System.Linq;
 
 namespace Timelogger.Api.Controllers
 {
@@ -15,10 +16,10 @@ namespace Timelogger.Api.Controllers
 		}
 
 		public class ProjectId
-{
-    public int Id { get; set; } // This will auto-increment if using Entity Framework
-    // Other properties
-}
+		{
+			public int Id { get; set; } // This will auto-increment if using Entity Framework
+										// Other properties
+		}
 
 		[HttpGet]
 		[Route("hello-world")]
@@ -36,21 +37,54 @@ namespace Timelogger.Api.Controllers
 
 
 		[HttpPost]
-        public IActionResult CreateProject([FromBody] Project project)
-        {
-            if (project == null)
-            {
-                return BadRequest();
-            }
+		public IActionResult CreateProject([FromBody] Project project)
+		{
+			if (project == null)
+			{
+				return BadRequest();
+			}
 
-            _context.Projects.Add(project);
-            _context.SaveChanges();
+			_context.Projects.Add(project);
+			_context.SaveChanges();
 
-            return Ok(project);
-        }
-    }
+			return Ok(project);
+		}
+
+		[HttpPost]
+		[Route("registerTime")]
+		public IActionResult RegisterTime([FromBody] TimeRegistrationRequest request)
+		{
+			// Fetch the existing project by ID
+			var project = _context.Projects.FirstOrDefault(p => p.Id == request.Id);
+			if (project == null)
+			{
+				// If no project found, return an appropriate response
+				return NotFound(new { message = "Project not found." });
+			}
+
+			// Update the registered time
+			project.RegisteredTime += request.Time;
+
+			// Save the changes
+			_context.SaveChanges();
+
+			// Return a success response
+			return Ok(new { message = "Time registered successfully." });
+		}
+
+		public class TimeRegistrationRequest
+		{
+			public int Id { get; set; }
+			public int Time { get; set; }
+		}
+
+
+
+
 
 	}
+
+}
 
 
 

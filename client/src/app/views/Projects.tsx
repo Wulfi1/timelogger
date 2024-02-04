@@ -66,6 +66,8 @@ export default function Projects() {
             {showTimeForm && (
                 <RegTimeForm
                     onClose={() => setShowTimeForm(false)}
+                    onDataChange={handleDataChange}
+                    
                 />
             )}
             <Table dataChanged={dataChanged} />  {/* Pass the state to Table */}
