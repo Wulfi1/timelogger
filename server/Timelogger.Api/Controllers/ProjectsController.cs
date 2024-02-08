@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Timelogger.Entities;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Timelogger.Api.Controllers
 {
@@ -9,7 +10,6 @@ namespace Timelogger.Api.Controllers
 	public class ProjectsController : Controller
 	{
 		private readonly ApiContext _context;
-
 		public ProjectsController(ApiContext context)
 		{
 			_context = context;
@@ -17,7 +17,7 @@ namespace Timelogger.Api.Controllers
 
 		public class ProjectId
 		{
-			public int Id { get; set; } 
+			public int Id { get; set; }
 		}
 
 		[HttpGet]
@@ -61,6 +61,15 @@ namespace Timelogger.Api.Controllers
 
 			project.RegisteredTime += request.Time;
 
+			var timeRegistration = new TimeRegistrations
+			{
+				ProjectId = request.Id, // Assuming you have a foreign key to Project
+				RegisteredTime = request.Time,
+				Note = request.Note,
+				Date = request.Date,
+			};
+
+			_context.TimeRegistrations.Add(timeRegistration);
 			_context.SaveChanges();
 
 			return Ok(new { message = "Time registered successfully." });
@@ -70,10 +79,33 @@ namespace Timelogger.Api.Controllers
 		{
 			public int Id { get; set; }
 			public int Time { get; set; }
+			public string Note { get; set; }
+			public string Date { get; set; }
 		}
 
+		[HttpGet("{projectId}/timeregistrations")]
+		public ActionResult<IEnumerable<TimeRegistrations>> GetTimeRegistrationsForProject(int projectId)
+		{
+			var timeRegistrations = _context.TimeRegistrations
+				.Where(tr => tr.ProjectId == projectId)
+				.Select(tr => new TimeRegistrations
+				{
+					RegisteredTime = tr.RegisteredTime,
+					Note = tr.Note,
+					Date = tr.Date
+				})
+				.ToList();
 
+			return Ok(timeRegistrations);
+		}
 
+		[HttpGet]
+		[Route("timeRegistrations")]
+		public IActionResult GetTimeRegistrations()
+		{
+			var timeRegistrations = _context.TimeRegistrations.ToList();
+			return Ok(timeRegistrations);
+		}
 
 
 	}

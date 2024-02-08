@@ -9,6 +9,10 @@ interface RegTimeFormProps {
 export default function RegTimeForm({ onClose, onDataChange }: RegTimeFormProps) {
     const [Time, setAmountTime] = useState(0);
     const [ProjectNumber, setProjectNumber] = useState(0);
+    const [TimeNote, setTimeNote] = useState('');
+    const [Date, setDate] = useState('');
+
+    //const payload = {Time, ProjectNumber, TimeNote, Date}
 
     const handleRegisterTime = async () => {
 
@@ -17,7 +21,7 @@ export default function RegTimeForm({ onClose, onDataChange }: RegTimeFormProps)
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ Id: ProjectNumber, Time: Time }),
+            body: JSON.stringify({ Id: ProjectNumber, Time: Time, Note: TimeNote, Date: Date }),
         });
 
         if (response.ok) {
@@ -55,6 +59,30 @@ export default function RegTimeForm({ onClose, onDataChange }: RegTimeFormProps)
                         value={Time}
                         onChange={(e) => setAmountTime(parseInt(e.target.value))}
                         id="registeredTime"
+                    />
+                </div>
+
+                <div className='field-container'>
+                    <label htmlFor="Time">Note</label>
+                    <input
+                        type="text"
+                        placeholder="Note"
+                        className="input-field"
+                        value={TimeNote}
+                        onChange={(e) => setTimeNote(e.target.value)}
+                        id="TimeNote"
+                    />
+                </div>
+
+                <div className='field-container'>
+                    <label htmlFor="Time">Date</label>
+                    <input
+                        type="date"
+                        placeholder="Date"
+                        className="input-field"
+                        value={Date}
+                        onChange={(e) => setDate(e.target.value)}
+                        id="Date"
                     />
                 </div>
 

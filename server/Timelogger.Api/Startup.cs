@@ -62,6 +62,7 @@ namespace Timelogger.Api
 			{
 				SeedDatabase(scope);
 			}
+			
 		}
 
 		private static void SeedDatabase(IServiceScope scope)

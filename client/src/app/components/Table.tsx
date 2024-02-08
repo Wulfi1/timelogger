@@ -18,10 +18,13 @@ const Table: React.FC<TableProps> = ({ dataChanged }) => {
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
     const [headerClicked, setHeaderClicked] = useState(false);
     const [timeOverview, setShowHoursView] = useState(false);
+    const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
+    
 
 
-    const handleTimeOverviewClick = () => {
+    const handleTimeOverviewClick = (ProjectId: number) => {
         setShowHoursView(true);
+        setSelectedProjectId(ProjectId);
     };
 
 
@@ -86,7 +89,7 @@ const Table: React.FC<TableProps> = ({ dataChanged }) => {
                             <td className="border px-4 py-2">{project.id}</td>
                             <td className="border px-4 py-2">{project.field1}</td>
                             <td className="border px-4 py-2">{project.field2}</td>
-                            <td style= {{textDecoration: 'underline', cursor: 'pointer'}} onClick={handleTimeOverviewClick} className="border px-4 py-2">{project.registeredTime + " Hours"}</td>
+                            <td style= {{textDecoration: 'underline', cursor: 'pointer'}} onClick={()=>handleTimeOverviewClick(project.id)} className="border px-4 py-2">{project.registeredTime + " Hours"}</td>
                             <td className="border px-4 py-2">{project.field3}</td>
                         </tr>
                     ))}
@@ -94,8 +97,9 @@ const Table: React.FC<TableProps> = ({ dataChanged }) => {
             </table>
 
 
-            {timeOverview && (
+            {timeOverview && selectedProjectId!= null && (
                 <TimeOverview
+                    projectId = {selectedProjectId}
                     onClose={() => setShowHoursView(false)}
 
 

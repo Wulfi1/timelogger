@@ -28,7 +28,6 @@ export default function EntryForm({ onClose, onDataChange }: EntryFormProps) {
                 console.log('Project created successfully');
                 onDataChange();
                 onClose();
-                // Optionally, trigger a refresh of the table or update global state
             } else {
                 console.error('Failed to create project');
             }
