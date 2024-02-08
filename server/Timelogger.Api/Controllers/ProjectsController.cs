@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Timelogger.Entities;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace Timelogger.Api.Controllers
 {
@@ -15,10 +16,6 @@ namespace Timelogger.Api.Controllers
 			_context = context;
 		}
 
-		public class ProjectId
-		{
-			public int Id { get; set; }
-		}
 
 		[HttpGet]
 		[Route("hello-world")]
@@ -61,8 +58,13 @@ namespace Timelogger.Api.Controllers
 
 			project.RegisteredTime += request.Time;
 
+			//var lastTimeRegistration = _context.TimeRegistrations.OrderByDescending(t => t.Id).FirstOrDefault();
+			//int nextId = lastTimeRegistration != null ? lastTimeRegistration.Id + 1 : 1;
+			
+
 			var timeRegistration = new TimeRegistrations
 			{
+	
 				ProjectId = request.Id, // Assuming you have a foreign key to Project
 				RegisteredTime = request.Time,
 				Note = request.Note,
@@ -72,7 +74,7 @@ namespace Timelogger.Api.Controllers
 			_context.TimeRegistrations.Add(timeRegistration);
 			_context.SaveChanges();
 
-			return Ok(new { message = "Time registered successfully." });
+			return Ok(new { message = "Time registered successfully."});
 		}
 
 		public class TimeRegistrationRequest
@@ -90,6 +92,8 @@ namespace Timelogger.Api.Controllers
 				.Where(tr => tr.ProjectId == projectId)
 				.Select(tr => new TimeRegistrations
 				{
+					Id = tr.Id,
+					ProjectId = tr.ProjectId,
 					RegisteredTime = tr.RegisteredTime,
 					Note = tr.Note,
 					Date = tr.Date
@@ -106,6 +110,8 @@ namespace Timelogger.Api.Controllers
 			var timeRegistrations = _context.TimeRegistrations.ToList();
 			return Ok(timeRegistrations);
 		}
+
+
 
 
 	}

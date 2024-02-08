@@ -77,7 +77,6 @@ namespace Timelogger.Api
 			};
 
 			context.Projects.Add(testProject1);
-
 			context.SaveChanges();
 		}
 	}
