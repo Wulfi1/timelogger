@@ -10,8 +10,10 @@ interface Project {
 }
 
 interface TableProps {
-    dataChanged: boolean;
+    dataChanged: boolean; 
 }
+
+
 
 const Table: React.FC<TableProps> = ({ dataChanged }) => {
     const [projects, setProjects] = useState<Project[]>([]);
@@ -20,7 +22,6 @@ const Table: React.FC<TableProps> = ({ dataChanged }) => {
     const [timeOverview, setShowHoursView] = useState(false);
     const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
     
-
 
     const handleTimeOverviewClick = (ProjectId: number) => {
         setShowHoursView(true);
@@ -101,8 +102,6 @@ const Table: React.FC<TableProps> = ({ dataChanged }) => {
                 <TimeOverview
                     projectId = {selectedProjectId}
                     onClose={() => setShowHoursView(false)}
-
-
                 />
             )}
         </>

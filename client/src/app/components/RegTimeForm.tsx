@@ -56,8 +56,9 @@ export default function RegTimeForm({ onClose, onDataChange }: RegTimeFormProps)
                         type="number"
                         placeholder="Hours"
                         className="input-field"
+                        step="0.5"
                         value={Time}
-                        onChange={(e) => setAmountTime(parseInt(e.target.value))}
+                        onChange={(e) => setAmountTime(parseFloat(e.target.value))}
                         id="registeredTime"
                     />
                 </div>

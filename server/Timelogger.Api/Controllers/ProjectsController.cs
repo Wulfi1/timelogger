@@ -80,7 +80,7 @@ namespace Timelogger.Api.Controllers
 		public class TimeRegistrationRequest
 		{
 			public int Id { get; set; }
-			public int Time { get; set; }
+			public float Time { get; set; }
 			public string Note { get; set; }
 			public string Date { get; set; }
 		}

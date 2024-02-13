@@ -6,6 +6,6 @@
         public string Field1 { get; set; }
         public string Field2 { get; set; }
         public string Field3 { get; set; }
-        public int RegisteredTime { get; set; } = 0;
+        public float RegisteredTime { get; set; } = 0;
     }
 }

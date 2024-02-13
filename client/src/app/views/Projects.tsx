@@ -3,6 +3,7 @@ import Table from "../components/Table";
 import EntryForm from '../components/EntryForm';
 import RegTimeForm from '../components/RegTimeForm';
 
+
 export default function Projects() {
 
     const [showEntryForm, setShowEntryForm] = useState(false);
