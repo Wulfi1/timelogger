@@ -13,7 +13,7 @@ export default function EntryForm({ onClose, onDataChange }: EntryFormProps) {
 
     // Function to handle the create action
     const handleCreate = async () => {
-        const projectData = { field1, field2, field3, registeredTime: 0 };
+        const projectData = { field1, field2, field3, registeredTime: 0, isEnded: false };
 
         try {
             const response = await fetch('http://localhost:3001/api/projects', {
@@ -23,6 +23,7 @@ export default function EntryForm({ onClose, onDataChange }: EntryFormProps) {
                 },
                 body: JSON.stringify(projectData),
             });
+            console.log(projectData);
 
             if (response.ok) {
                 console.log('Project created successfully');

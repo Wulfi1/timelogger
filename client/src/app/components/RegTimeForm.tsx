@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 
 interface RegTimeFormProps {
@@ -11,10 +11,35 @@ export default function RegTimeForm({ onClose, onDataChange }: RegTimeFormProps)
     const [ProjectNumber, setProjectNumber] = useState(0);
     const [TimeNote, setTimeNote] = useState('');
     const [Date, setDate] = useState('');
+    const [canRegisterTime, setCanRegisterTime] = useState(true);
 
-    //const payload = {Time, ProjectNumber, TimeNote, Date}
+    useEffect(() => {
+        const fetchProjectDetails = async () => {
+            if (ProjectNumber > 0) {
+                try {
+                    const response = await fetch(`http://localhost:3001/api/projects/${ProjectNumber}`);
+                    if (response.ok) {
+                        const project = await response.json();
+                        setCanRegisterTime(!project.isEnded);
+                    } else {
+                        console.error('ProjectNumber doesn\'t exist');
+                    }
+                } catch (error) {
+                    console.error('Error fetching project details:', error);
+                }
+            }
+        };
+
+        fetchProjectDetails();
+    }, [ProjectNumber]);
+
 
     const handleRegisterTime = async () => {
+
+        if (!canRegisterTime) {
+            alert('Cannot register time for a project that has ended.');
+            return;
+        }
 
         const response = await fetch('http://localhost:3001/api/projects/registerTime', {
             method: 'POST',
@@ -90,15 +115,16 @@ export default function RegTimeForm({ onClose, onDataChange }: RegTimeFormProps)
                 <div className='buttons-field'>
                     <button
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        onClick={onClose}>
-                        Close
-                    </button>
-                    <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         onClick={handleRegisterTime}
                     >
                         Register
                     </button>
+                    <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        onClick={onClose}>
+                        Close
+                    </button>
+
 
                 </div>
             </div>

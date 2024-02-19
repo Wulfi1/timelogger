@@ -46,6 +46,18 @@ namespace Timelogger.Api.Controllers
 			return Ok(project);
 		}
 
+		[HttpGet("{ProjectNumber}")]
+		public IActionResult GetProjectById(int ProjectNumber)
+		{
+			var project = _context.Projects.FirstOrDefault(p => p.Id == ProjectNumber);
+			if (project == null)
+			{
+				return NotFound(new { message = "Project not found." });
+			}
+
+			return Ok(project);
+		}
+
 		[HttpPost]
 		[Route("registerTime")]
 		public IActionResult RegisterTime([FromBody] TimeRegistrationRequest request)
@@ -58,14 +70,9 @@ namespace Timelogger.Api.Controllers
 
 			project.RegisteredTime += request.Time;
 
-			//var lastTimeRegistration = _context.TimeRegistrations.OrderByDescending(t => t.Id).FirstOrDefault();
-			//int nextId = lastTimeRegistration != null ? lastTimeRegistration.Id + 1 : 1;
-			
-
 			var timeRegistration = new TimeRegistrations
 			{
-	
-				ProjectId = request.Id, // Assuming you have a foreign key to Project
+				ProjectId = request.Id,
 				RegisteredTime = request.Time,
 				Note = request.Note,
 				Date = request.Date,
@@ -74,7 +81,7 @@ namespace Timelogger.Api.Controllers
 			_context.TimeRegistrations.Add(timeRegistration);
 			_context.SaveChanges();
 
-			return Ok(new { message = "Time registered successfully."});
+			return Ok(new { message = "Time registered successfully." });
 		}
 
 		public class TimeRegistrationRequest
@@ -109,6 +116,21 @@ namespace Timelogger.Api.Controllers
 		{
 			var timeRegistrations = _context.TimeRegistrations.ToList();
 			return Ok(timeRegistrations);
+		}
+
+		[HttpPost("{projectId}/{ended}/end")]
+		public IActionResult EndProject(int projectId, bool ended)
+		{
+			var project = _context.Projects.FirstOrDefault(p => p.Id == projectId);
+			if (project == null)
+			{
+				return NotFound();
+			}
+
+			project.IsEnded = ended;
+			_context.SaveChanges();
+
+			return Ok(new { message = "Project ended successfully." });
 		}
 
 
