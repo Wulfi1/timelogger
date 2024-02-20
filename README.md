@@ -55,3 +55,9 @@ Server - `dotnet restore` - to restore nuget packages, `dotnet build` - to build
 The server solution contains an API only with a basic Entity Framework in memory context that acts as a database.
 
 Client - `npm install` to install dependencies, `npm start` runs the create-react-app development server
+
+
+
+Sebs README:
+
+
