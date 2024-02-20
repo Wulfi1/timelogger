@@ -4,9 +4,9 @@ import { FaTimes, FaCheck } from 'react-icons/fa';
 
 interface Project {
     id: number;
-    field1: string;
-    field2: string;
-    field3: string;
+    projectName: string;
+    customerName: string;
+    date: string;
     registeredTime: number;
     isEnded: boolean;
 }
@@ -37,7 +37,6 @@ const Table: React.FC<TableProps> = ({ dataChanged }) => {
                 const response = await fetch('http://localhost:3001/api/projects');
                 if (response.ok) {
                     const data: Project[] = await response.json();
-                    console.log(data);
                     setProjects(data);
                 } else {
                     console.error('Failed to fetch projects');
@@ -54,7 +53,6 @@ const Table: React.FC<TableProps> = ({ dataChanged }) => {
         try {
             const response = await fetch(`http://localhost:3001/api/projects/${projectId}/${ended}/end`, { method: 'POST' });
             if (response.ok) {
-                // Assuming the backend returns the updated project, otherwise adjust as needed
                 const updatedProjects = projects.map(project => {
                     if (project.id === projectId) {
                         return { ...project, isEnded: ended };
@@ -69,12 +67,10 @@ const Table: React.FC<TableProps> = ({ dataChanged }) => {
         }
     };
 
-
-
     const sortProjects = (projectsToSort: Project[]): Project[] => {
         return projectsToSort.sort((a, b) => {
-            const dateA = new Date(a.field3);
-            const dateB = new Date(b.field3);
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
             return sortOrder === 'asc' ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
         });
     };
@@ -111,10 +107,10 @@ const Table: React.FC<TableProps> = ({ dataChanged }) => {
                     {displayProjects.map((project) => (
                         <tr key={project.id}>
                             <td className="border px-4 py-2">{project.id}</td>
-                            <td className="border px-4 py-2">{project.field1}</td>
-                            <td className="border px-4 py-2">{project.field2}</td>
+                            <td className="border px-4 py-2">{project.projectName}</td>
+                            <td className="border px-4 py-2">{project.customerName}</td>
                             <td style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={() => handleTimeOverviewClick(project.id)} className="border px-4 py-2">{project.registeredTime + " Hours"}</td>
-                            <td className="border px-4 py-2">{project.field3}</td>
+                            <td className="border px-4 py-2">{project.date}</td>
                             <td className="border px-4 py-2">
                                 {project.isEnded ? (
                                     <>

@@ -7,13 +7,13 @@ interface EntryFormProps {
 
 export default function EntryForm({ onClose, onDataChange }: EntryFormProps) {
     // State variables for input fields
-    const [field1, setField1] = useState('');
-    const [field2, setField2] = useState('');
-    const [field3, setField3] = useState('');
+    const [projectName, setProjectName] = useState('');
+    const [customerName, setCustumorName] = useState('');
+    const [date, setDeadLine] = useState('');
 
     // Function to handle the create action
     const handleCreate = async () => {
-        const projectData = { field1, field2, field3, registeredTime: 0, isEnded: false };
+        const projectData = { projectName, customerName, date, registeredTime: 0, isEnded: false };
 
         try {
             const response = await fetch('http://localhost:3001/api/projects', {
@@ -45,11 +45,11 @@ export default function EntryForm({ onClose, onDataChange }: EntryFormProps) {
                     <label htmlFor="field1">Project Name</label>
                     <input
                         type="text"
-                        placeholder="Field 1"
+                        placeholder="Project Name"
                         className="input-field"
-                        value={field1}
-                        onChange={(e) => setField1(e.target.value)}
-                        id="field1"
+                        value={projectName}
+                        onChange={(e) => setProjectName(e.target.value)}
+                        id="projectName"
                     />
                 </div>
 
@@ -58,11 +58,11 @@ export default function EntryForm({ onClose, onDataChange }: EntryFormProps) {
                     <label htmlFor="field2">Customer Name</label>
                     <input
                         type="text"
-                        placeholder="Field 2"
+                        placeholder="Customer Name"
                         className="input-field"
-                        value={field2}
-                        onChange={(e) => setField2(e.target.value)}
-                        id="field2"
+                        value={customerName}
+                        onChange={(e) => setCustumorName(e.target.value)}
+                        id="customerName"
                     />
                 </div>
 
@@ -73,9 +73,9 @@ export default function EntryForm({ onClose, onDataChange }: EntryFormProps) {
                         type="Date"
                         placeholder="Date"
                         className="input-field"
-                        value={field3}
-                        onChange={(e) => setField3(e.target.value)}
-                        id="field3"
+                        value={date}
+                        onChange={(e) => setDeadLine(e.target.value)}
+                        id="date"
                     />
                 </div>
 

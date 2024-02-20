@@ -23,7 +23,7 @@ export default function TimeOverview({ onClose, projectId }: TableProps) {
 
     useEffect(() => {
         const fetchTimeRegistrations = async () => {
-            if (!projectId) return;// Ensure projectId is not null
+            if (!projectId) return;
             try {
                 const response = await fetch(`http://localhost:3001/api/projects/${projectId}/timeregistrations`);
                 if (response.ok) {
@@ -40,10 +40,6 @@ export default function TimeOverview({ onClose, projectId }: TableProps) {
         };
         fetchTimeRegistrations();
     }, [projectId]);
-
-    useEffect(() => {
-        console.log(timeRegistrations); // This will log every time timeRegistrations changes
-    }, [timeRegistrations]);
 
     const handleCheckboxChange = (id: string) => {
         const updatedCheckedState = {

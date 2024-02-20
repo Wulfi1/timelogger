@@ -17,8 +17,7 @@ export default function RegTimeForm({ onClose, onDataChange }: RegTimeFormProps)
             alert('Invalid Project Number.');
             return;
         }
-    
-        // Validate the project number by fetching project details
+
         try {
             const response = await fetch(`http://localhost:3001/api/projects/${ProjectNumber}`);
             if (!response.ok) {
@@ -32,7 +31,6 @@ export default function RegTimeForm({ onClose, onDataChange }: RegTimeFormProps)
                 return;
             }
     
-            // If project is valid and not ended, proceed to register time
             const timeResponse = await fetch('http://localhost:3001/api/projects/registerTime', {
                 method: 'POST',
                 headers: {
@@ -88,12 +86,12 @@ export default function RegTimeForm({ onClose, onDataChange }: RegTimeFormProps)
                 <div className='field-container'>
                     <label htmlFor="Time">Amount of Hours</label>
                     <input
-                        type="text" // Change to text to allow initial free-form input
+                        type="text" 
                         placeholder="Hours"
                         className="input-field"
                         value={Time}
                         onChange={handleTimeChange}
-                        onBlur={handleTimeBlur} // Step 3: Add onBlur handler
+                        onBlur={handleTimeBlur} 
                         id="registeredTime"
                     />
                 </div>

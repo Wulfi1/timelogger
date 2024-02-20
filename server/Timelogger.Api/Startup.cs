@@ -71,9 +71,9 @@ namespace Timelogger.Api
 			var testProject1 = new Project
 			{
 				Id = 1,
-				Field1 = "E-conomic",
-				Field2 = "Dwayne",
-				Field3 = "2024-02-10",
+				ProjectName = "E-conomic",
+				CustomerName = "Dwayne",
+				Date = "2024-02-10",
 			};
 
 			context.Projects.Add(testProject1);
