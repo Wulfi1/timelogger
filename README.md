@@ -1,3 +1,26 @@
+Sebs README:
+
+Her er lige mine noter og kommentarer til dette projekt. Som sagt så har jeg aldrig arbejdet med frontend andet end javafx og java swing som gjorde at det var helt nyt men samtidig meget interessant at blive kastet ud i. Backend har jeg godt nok arbejdet en del med  på studie, dog ikke i denne omfang i forhold til databaser og API mellem frontend og backend, så denne del skulle også læres. Overordnet har projektet været udfordrerne i starten, heldigvis blev det nemmere og mere forståeligt med tiden og så har det også været spændende, grundet at det var mange ny ting for mig.
+
+Tid brugt: 25-30 timer
+
+Forbedringer:
+
+Hvis jeg valgte at investerer mere tid i dette projekt, så ville dette være nogen af de forbedringer jeg ville kigge på at få implementeret som det første:
+
+- Kunne redigere projekter, tidsregistreringer samt slette tidsregistreringer også.
+- Flytte afsluttede projekter til enten  et nyt view eller et nyt table. Tænkte lidt man kunne lave det noget alla vores   åben/spærret funktion i e-conomic så at man havde en lille dropdown hvor man kunne vælge "show open/show ended"
+- Søgefelt
+- Lidt GUI optimering
+- Muligvis en opstarts guide til programmet, som det blev større, så at kunden blev bekendte med alle funktioner som der er at tilbyde
+
+I forhold til koden så har jeg en ting jeg ville have gjort anderledes og det er at dele projectcontroller op i 2 så at jeg havde en projectcontroller og en timeregistrationscontroller. Som koden er lige nu, så virker det fint med at have det samlet, men i forhold til scalability, så ville den fil blive et rod med tiden, som programmet blev større.
+
+Lille forklaring af programmet og dens funktioner:
+Meget af programmet er lige til, men der kommer lige en lille forklaring her.
+
+Programmet er bygget op om projektstyring, så at du selvfølgelig kan oprette et projekt og registrere tid på det. Når tid er registreret på projektet så kan man se tidsregistreringerne ved at klikke på den summerede tid. Herinde vil du kunne se hver tidsregistrering på det givne projekt, samt sætte flueben  i om den tidsregistrering  er faktureret eller ikke. Ude på projekternes side, har  du muligheden for at sorterer på projekternes deadline så at du kan have et overblik over hvilke projekter der skal prioteres. Samt kan du  også afslutte projekterne på X'et ude til højre og når det er afsluttet så vil du ikke kunne registrere tid på det, ved mindre du åbner det igen.
+
 # e-conomic & sproom hiring task
 
 As a part of the e-conomic/sproom recruitment process we ask our candidates to complete a practical development challenge. The challenge consists of two parts:
@@ -58,6 +81,6 @@ Client - `npm install` to install dependencies, `npm start` runs the create-reac
 
 
 
-Sebs README:
+
 
 
