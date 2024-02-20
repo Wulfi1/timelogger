@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 
 interface RegTimeFormProps {
@@ -11,51 +11,47 @@ export default function RegTimeForm({ onClose, onDataChange }: RegTimeFormProps)
     const [ProjectNumber, setProjectNumber] = useState(0);
     const [TimeNote, setTimeNote] = useState('');
     const [Date, setDate] = useState('');
-    const [canRegisterTime, setCanRegisterTime] = useState(true);
-
-    useEffect(() => {
-        const fetchProjectDetails = async () => {
-            if (ProjectNumber > 0) {
-                try {
-                    const response = await fetch(`http://localhost:3001/api/projects/${ProjectNumber}`);
-                    if (response.ok) {
-                        const project = await response.json();
-                        setCanRegisterTime(!project.isEnded);
-                    } else {
-                        console.error('ProjectNumber doesn\'t exist');
-                    }
-                } catch (error) {
-                    console.error('Error fetching project details:', error);
-                }
-            }
-        };
-
-        fetchProjectDetails();
-    }, [ProjectNumber]);
-
 
     const handleRegisterTime = async () => {
-
-        if (!canRegisterTime) {
-            alert('Cannot register time for a project that has ended.');
+        if (ProjectNumber <= 0) {
+            alert('Invalid Project Number.');
             return;
         }
-
-        const response = await fetch('http://localhost:3001/api/projects/registerTime', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ Id: ProjectNumber, Time: parseFloat(Time), Note: TimeNote, Date: Date }),
-        });
-
-        if (response.ok) {
-            console.log('Time registered successfully');
-            onDataChange();
-        } else {
-            console.error('Failed to register time');
+    
+        // Validate the project number by fetching project details
+        try {
+            const response = await fetch(`http://localhost:3001/api/projects/${ProjectNumber}`);
+            if (!response.ok) {
+                alert('Project Number does not exist.');
+                return;
+            }
+    
+            const project = await response.json();
+            if (project.isEnded) {
+                alert('Cannot register time for a project that has ended.');
+                return;
+            }
+    
+            // If project is valid and not ended, proceed to register time
+            const timeResponse = await fetch('http://localhost:3001/api/projects/registerTime', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ Id: ProjectNumber, Time: parseFloat(Time), Note: TimeNote, Date: Date }),
+            });
+    
+            if (timeResponse.ok) {
+                console.log('Time registered successfully');
+                onDataChange();
+            } else {
+                console.error('Failed to register time');
+            }
+    
+        } catch (error) {
+            console.error('Error validating project number or registering time:', error);
         }
-
+    
         onClose();
     };
 

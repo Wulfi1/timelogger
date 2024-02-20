@@ -99,8 +99,8 @@ const Table: React.FC<TableProps> = ({ dataChanged }) => {
                 <thead className="bg-gray-200">
                     <tr>
                         <th className="border px-4 py-2 w-12">#</th>
-                        <th className="border px-4 py-2">Project Name</th>
-                        <th className="border px-4 py-2">Customer Name</th>
+                        <th className="border px-4 py-2 w-80">Project Name</th>
+                        <th className="border px-4 py-2 w-80">Customer Name</th>
                         <th className="border px-4 py-2">Registered Time</th>
                         <th onClick={toggleSortOrder} style={{ cursor: 'pointer' }}> Deadline {renderSortArrow()}</th>
                         <th className="border px-4 py-2">Project Status</th>
