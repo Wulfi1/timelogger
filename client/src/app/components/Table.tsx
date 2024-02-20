@@ -90,11 +90,12 @@ const Table: React.FC<TableProps> = ({ dataChanged }) => {
         setHeaderClicked(true);
     };
 
-    const sortedProjects = sortProjects([...projects]);
+    const displayProjects = headerClicked ? sortProjects([...projects]) : projects;
 
 
     return (
         <>
+        <div style={{ maxHeight: '550px', overflowY: 'auto' }}>
             <table className="table-fixed w-full">
                 <thead className="bg-gray-200">
                     <tr>
@@ -107,7 +108,7 @@ const Table: React.FC<TableProps> = ({ dataChanged }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {sortedProjects.map((project) => (
+                    {displayProjects.map((project) => (
                         <tr key={project.id}>
                             <td className="border px-4 py-2">{project.id}</td>
                             <td className="border px-4 py-2">{project.field1}</td>
@@ -137,7 +138,9 @@ const Table: React.FC<TableProps> = ({ dataChanged }) => {
                     onClose={() => setShowHoursView(false)}
                 />
             )}
+            </div>
         </>
+        
     );
 }
 

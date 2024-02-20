@@ -57,6 +57,7 @@ export default function TimeOverview({ onClose, projectId }: TableProps) {
     return (
         <div className="entryForm-overlay">
             <div className="entryForm-content">
+            <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
                 <table className="table-fixed w-full">
                     <thead className="bg-gray-200">
                         <tr>
@@ -90,6 +91,7 @@ export default function TimeOverview({ onClose, projectId }: TableProps) {
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         onClick={onClose}>Close</button>
                 </div>
+            </div>
             </div>
         </div>
 
