@@ -7,7 +7,7 @@ interface RegTimeFormProps {
 }
 
 export default function RegTimeForm({ onClose, onDataChange }: RegTimeFormProps) {
-    const [Time, setAmountTime] = useState(0);
+    const [Time, setAmountTime] = useState('');
     const [ProjectNumber, setProjectNumber] = useState(0);
     const [TimeNote, setTimeNote] = useState('');
     const [Date, setDate] = useState('');
@@ -46,7 +46,7 @@ export default function RegTimeForm({ onClose, onDataChange }: RegTimeFormProps)
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ Id: ProjectNumber, Time: Time, Note: TimeNote, Date: Date }),
+            body: JSON.stringify({ Id: ProjectNumber, Time: parseFloat(Time), Note: TimeNote, Date: Date }),
         });
 
         if (response.ok) {
@@ -57,6 +57,20 @@ export default function RegTimeForm({ onClose, onDataChange }: RegTimeFormProps)
         }
 
         onClose();
+    };
+
+    const validateInput = (input: string) => /^-?\d+(\.\d+)?$/.test(input);
+
+    const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAmountTime(e.target.value); 
+    };
+
+    const handleTimeBlur = () => {
+        if (validateInput(Time)) {
+            setAmountTime(Time);
+        } else {
+            setAmountTime('');
+        }
     };
 
 
@@ -78,12 +92,12 @@ export default function RegTimeForm({ onClose, onDataChange }: RegTimeFormProps)
                 <div className='field-container'>
                     <label htmlFor="Time">Amount of Hours</label>
                     <input
-                        type="number"
+                        type="text" // Change to text to allow initial free-form input
                         placeholder="Hours"
                         className="input-field"
-                        step="0.5"
                         value={Time}
-                        onChange={(e) => setAmountTime(parseFloat(e.target.value))}
+                        onChange={handleTimeChange}
+                        onBlur={handleTimeBlur} // Step 3: Add onBlur handler
                         id="registeredTime"
                     />
                 </div>
