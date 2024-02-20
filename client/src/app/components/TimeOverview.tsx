@@ -74,8 +74,8 @@ export default function TimeOverview({ onClose, projectId }: TableProps) {
                                 <td className="border px-4 py-2">
                                     <input
                                         type="checkbox"
-                                        checked={!!checkedState[registrations.id]} // Use the registration.id to check the state
-                                        onChange={() => handleCheckboxChange(registrations.id)} // Pass registration.id to the handler
+                                        checked={!!checkedState[registrations.id]} 
+                                        onChange={() => handleCheckboxChange(registrations.id)} 
                                     />
                                 </td>
                             </tr>

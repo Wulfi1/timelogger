@@ -6,12 +6,10 @@ interface EntryFormProps {
 }
 
 export default function EntryForm({ onClose, onDataChange }: EntryFormProps) {
-    // State variables for input fields
     const [projectName, setProjectName] = useState('');
     const [customerName, setCustumorName] = useState('');
     const [date, setDeadLine] = useState('');
 
-    // Function to handle the create action
     const handleCreate = async () => {
         const projectData = { projectName, customerName, date, registeredTime: 0, isEnded: false };
 
@@ -40,7 +38,6 @@ export default function EntryForm({ onClose, onDataChange }: EntryFormProps) {
     return (
         <div className="entryForm-overlay">
             <div className="entryForm-content">
-                {/* Field 1 */}
                 <div className='field-container'>
                     <label htmlFor="field1">Project Name</label>
                     <input
@@ -52,8 +49,6 @@ export default function EntryForm({ onClose, onDataChange }: EntryFormProps) {
                         id="projectName"
                     />
                 </div>
-
-                {/* Field 2 */}
                 <div className='field-container'>
                     <label htmlFor="field2">Customer Name</label>
                     <input
@@ -65,8 +60,6 @@ export default function EntryForm({ onClose, onDataChange }: EntryFormProps) {
                         id="customerName"
                     />
                 </div>
-
-                {/* Field 3  */}
                 <div className='field-container'>
                     <label htmlFor="field3">Deadline</label>
                     <input

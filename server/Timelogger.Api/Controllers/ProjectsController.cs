@@ -132,12 +132,7 @@ namespace Timelogger.Api.Controllers
 
 			return Ok(new { message = "Project ended successfully." });
 		}
-
-
-
-
 	}
-
 }
 
 
